@@ -2,12 +2,9 @@ package com.example.myapplication
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -34,12 +31,19 @@ class MainActivity : AppCompatActivity() {
                     name = NotificationController.Action.ACTION_1,
                     extras = null))
                 .addAction(R.drawable.ic_launcher_foreground, "vvvv",
-                    NotificationController.pendingIntent(this,
+                    NotificationController.pendingIntent(
+                        this,
                         NotificationController.Action.ACTION_2,
                         null,
                     )
                 )
-            NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build())
+            NotificationManagerCompat.from(this).run {
+                if (Build.VERSION.SDK_INT >= 26) {
+                    val notificationChannel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                    createNotificationChannel(notificationChannel)
+                }
+                notify(NOTIFICATION_ID, builder.build())
+            }
         }
 
         binding.button2.setOnClickListener {
@@ -49,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val CHANNEL_ID = "channel_id"
+        private const val CHANNEL_NAME = "channel_name"
         private const val NOTIFICATION_ID = 1
     }
 }
