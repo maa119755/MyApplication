@@ -23,11 +23,6 @@ class MainActivity : AppCompatActivity() {
         binding.button1.setOnClickListener {
             binding.textView.text = "dfghjkl"
 
-            val intent = Intent(this, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
             // Создаём уведомление
             val builder = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
@@ -35,7 +30,9 @@ class MainActivity : AppCompatActivity() {
                 .setContentText("Пора покормить кота")
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
+                .setContentIntent(NotificationController.pendingIntent(this,
+                    name = NotificationController.Action.ACTION_1,
+                    extras = null))
             NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build())
         }
 
@@ -46,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val CHANNEL_ID = "channel_id"
-        private const val CHANNEL_NAME = "channel_name"
         private const val NOTIFICATION_ID = 1
     }
 }
