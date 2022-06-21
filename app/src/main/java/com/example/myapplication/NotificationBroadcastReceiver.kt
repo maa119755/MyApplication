@@ -13,7 +13,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.v("___", "$intent")
-        Toast.makeText(context, "Action One hit!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "$intent", Toast.LENGTH_LONG).show()
     }
 }
 
@@ -29,6 +29,7 @@ object NotificationController {
 
     enum class Action
     {
-        ACTION_1
+        ACTION_1,
+        ACTION_2,
     }
 }

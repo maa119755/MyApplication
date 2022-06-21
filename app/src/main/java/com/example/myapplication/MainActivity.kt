@@ -33,6 +33,12 @@ class MainActivity : AppCompatActivity() {
                 .setContentIntent(NotificationController.pendingIntent(this,
                     name = NotificationController.Action.ACTION_1,
                     extras = null))
+                .addAction(R.drawable.ic_launcher_foreground, "vvvv",
+                    NotificationController.pendingIntent(this,
+                        NotificationController.Action.ACTION_2,
+                        null,
+                    )
+                )
             NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build())
         }
 
