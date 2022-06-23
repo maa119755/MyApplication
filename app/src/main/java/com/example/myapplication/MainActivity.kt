@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 .setContentText("Пора покормить кота")
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(NotificationController.pendingIntent(this,
+                .setContentIntent(NotificationController.pendingIntent(applicationContext,
                     name = NotificationController.Action.ACTION_1,
                     extras = null))
                 .addAction(R.drawable.ic_launcher_foreground, "vvvv",
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                         null,
                     )
                 )
-            NotificationManagerCompat.from(this).run {
+            NotificationManagerCompat.from(applicationContext).run {
                 if (Build.VERSION.SDK_INT >= 26) {
                     val notificationChannel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
                     createNotificationChannel(notificationChannel)
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.button2.setOnClickListener {
-            NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID)
+            NotificationManagerCompat.from(applicationContext).cancel(NOTIFICATION_ID)
         }
     }
 
